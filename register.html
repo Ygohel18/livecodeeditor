@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
     <link rel="stylesheet" href="assets/css/animate.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/toastr.min.css" />
     <link rel="stylesheet" href="assets/css/site.min.css" />
 
     <script src="assets/js/jquery.min.js"></script>
@@ -84,7 +83,7 @@
             };
 
             $.ajax(settings).done(function (response) {
-                console.log(response);
+                $(location).attr("href", "./login.html");
             });
         }
     </script>

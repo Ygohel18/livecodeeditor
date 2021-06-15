@@ -9,7 +9,7 @@ defineConstant('DB_CLASS', CLSPATH . 'database.class.php');
 defineConstant('FUN_CLASS', CLSPATH . 'function.class.php');
 
 global $dbc;
-global $crafty_fun;
+global $code_fun;
 
 function defineConstant($path, $value)
 {

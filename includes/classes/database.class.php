@@ -1,14 +1,5 @@
 <?php
 
-/* File Name        :   database.class.php
- * Project          :   Planck Auth
- * Version 		    :   1.0.0
- * Date Created	    :   OCT 30 2020
- * Date Modified	:   OCT 30 2020
- * Author			:   Yash Gohel ( Planck Studio )
- * Local URL        :   https://api.planckstud.io/auth/includes/class/database.class.php
- */
-
 namespace Code;
 use \PDO as PDO;
 
