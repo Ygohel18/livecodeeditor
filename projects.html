@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/toastr.min.css" />
+    <link rel="stylesheet" href="assets/css/site.min.css" />
+    <script src="codemirror/mode/css/css.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="assets/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="head">
+        <a href="./index.html"><h2>Live <span style="color: greenyellow;">Code</span> Editor</h2></a>
+        <div class="buttons_head">
+            <button id="change_view" class="c_view">Change View</button>
+            <button id="save_code" class="s_code">Save</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-custom spacing8">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NAME</th>
+                                <th>DATE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="render-projects">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var btn = document.getElementById("save_code");
+        btn.addEventListener("click", function () {
+            saveToServer(localStorage.getItem("code_html"), localStorage.getItem("code_css"), localStorage.getItem("code_js"));
+        });
+    </script>
+    <script>
+
+
+        window.onload = function () {
+            getProjects();
+        };
+
+
+        function getProjects() {
+            let uid = localStorage.getItem("uid");
+            var settings = {
+                "url": "http://localhost/code/api?action=getCode&uid=" + uid,
+                "method": "POST",
+                "timeout": 0
+            };
+
+            $.ajax(settings).done(function (response) {
+                let res = JSON.stringify(response);
+                let r = JSON.parse(res);
+                var len = r.result.length;
+                for (var i = 0; i < len; i++) {
+                    let f = r.result[i].path.split("/");
+                    let f2 = f[2].split(".");
+                    let name = f2[0];
+                    let link = "./update.html?id=" + name;
+                    let ping = "http://localhost/code/api/?do=delete&id="+r.result[i].ID;
+                    var tno = i + 1;
+                    let tr = $("<tr></tr>");
+                    let tag0 = $("<th></th>").text(tno);
+                    let tag1 = $("<td></td>").append($("<a></a>").attr("href", link).attr('target', '_blanck').text(name));
+                    let tag2 = $("<td></td>").text(r.result[i].date);
+                    let tag3 = $("<td></td>").append($("<a></a>").attr('href', "./projects.html").attr("ping", ping).attr('target', '_blanck').text("DELETE"));
+                    tr.append().append(tag0).append(tag1).append(tag2).append(tag3);
+                    $("#render-projects").append(tr);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

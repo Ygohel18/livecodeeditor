@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: rgb(16, 16, 23);
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+tr,td,th {
+    text-align: center!important;
+}
+
+.head h2 {
+    color: white;
+    padding: 15px 0px;
+    /* float: left; */
+}
+
+.head{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.buttons_head{
+    margin-left: auto;
+    margin-right: 5px;
+}
+.c_view{
+    margin-right: 10px;
+}
+.c_view , .s_code{
+    width: 130px;
+    cursor: pointer;
+    height: 35px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid greenyellow;
+    outline: none;
+    color:white;
+    /* float: right; */
+}
+
+.c_view:hover, .s_code:hover{
+    background-color: yellowgreen;
+    transition: 0.2s ease-out;
+}
+
+.code {
+    display: flex;
+}
+
+
+#btn_html, #btn_css, #btn_js {
+    display: none;
+}
+
+
+.html-code, .css-code, .js-code {
+    margin-right: 5px;
+    border-radius: 5px;
+    width: 33.3%;
+    word-wrap: normal;
+}
+
+.html-code p, .css-code p, .js-code p {
+    background-color: rgba(255, 255, 255, 0.28);
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    padding: 3px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.frame {
+    margin-top: 10px;
+}
+
+.frame iframe {
+    width: 100%;
+    height: 500px;
+    background-color: white;
+    border: none;
+}
+
+.frame p {
+    margin: 0;
+    /* padding: 0; */
+    width: inherit;
+    color: white;
+    font-size: 18px;
+    padding: 3px;
+    text-align: center;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.28);
+}
+
+@media screen and (max-width:768px) {
+    .html-code {
+        width: 100%;
+    }
+    .html-code p {
+        display: none;
+    }
+    .buttons {
+        display: flex;
+    }
+    h2 {
+        font-size: 22px;
+        width: fit-content;
+        padding: 7px;
+    }
+    #btn_html, #btn_css, #btn_js {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        margin: 2px;
+        padding: 5px;
+        font-family: 'Poppins', sans-serif;
+        background-color: rgba(255, 255, 255, 0.28);
+        color: white;
+        outline: none;
+        border: none;
+        margin-bottom: 4px;
+    }
+    .css-code, .js-code {
+        display: none;
+    }
+
+    .s_code{
+        width: 90px;
+        height: 35px;
+        font-size: 14px;
+    }
+  .c_view{
+      display: none;
+  }
+}

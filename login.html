@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link rel="icon" href="assets/img/icon.png" type="image/x-icon" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/toastr.min.css" />
+    <link rel="stylesheet" href="assets/css/site.min.css" />
+
+    <script src="assets/js/jquery.min.js"></script>
+
+    <title>Login - Live Code Editor</title>
+</head>
+
+<body>
+    <div class="auth-main particles_js">
+        <div class="auth_div vivify popIn">
+            <div class="auth_brand">
+                <a class="navbar-brand" href="javascript:void(0);">Live Code Editor</a>
+            </div>
+            <div class="card">
+                <div class="body">
+                    <p class="lead">Login</p>
+                    <form class="form-auth-small m-t-20" id="login" name="login" method="post">
+                        <div class="form-group">
+                            <label for="login-email" class="control-label sr-only">Email</label>
+                            <input type="text" class="form-control round" id="login-email" value="" placeholder="Email"
+                                name="auth_email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password" class="control-label sr-only">Password</label>
+                            <input type="password" class="form-control round" id="login-password" value=""
+                                placeholder="Password" name="auth_pass" />
+                        </div>
+                        <input type="hidden" value="login" name="request" />
+                        <div class="btn btn-primary btn-round btn-block" name="login_btn" id="login-btn">
+                            Login
+                        </div>
+                    </form>
+                    <a href="register.html">
+                        <p class="lead"></p>Didn't have an account?</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var btn = document.getElementById("login-btn");
+        btn.addEventListener("click", function () {
+            let email = document.getElementById("login-email").value;
+            let pass = document.getElementById("login-password").value;
+
+            if (email != null && pass != null) {
+                userLogin(email, pass);
+            } else {
+                console.log("Enter Valuel");
+            }
+        });
+        function userLogin(email, pass) {
+            var settings = {
+                url:
+                    "http://localhost/code/api?action=checkLogin&password=" +
+                    pass +
+                    "&email=" +
+                    pass,
+                method: "POST",
+                timeout: 0,
+                mode: "nocors"
+            };
+
+            $.ajax(settings).done(function (response) {
+                let res = JSON.stringify(response);
+                let r = JSON.parse(res);
+
+                if(r.success) {
+                    localStorage.setItem("isLogin", true);
+                    localStorage.setItem("uid", r.result);
+                    $(location).attr("href", "./index.html");
+                } else{
+                    localStorage.setItem("isLogin", false);
+                    localStorage.setItem("uid", null);
+                }
+            });
+        }
+    </script>
+    <script></script>
+</body>
+
+</html>

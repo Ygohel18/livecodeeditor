@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link rel="icon" href="assets/img/icon.png" type="image/x-icon" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/toastr.min.css" />
+    <link rel="stylesheet" href="assets/css/site.min.css" />
+
+    <script src="assets/js/jquery.min.js"></script>
+
+    <title>Login - Dashboard</title>
+</head>
+
+<body>
+    <div class="auth-main particles_js">
+        <div class="auth_div vivify popIn">
+            <div class="auth_brand">
+                <a class="navbar-brand" href="javascript:void(0);">Live Code Editor</a>
+            </div>
+            <div class="card">
+                <div class="body">
+                    <p class="lead">Register</p>
+                    <form class="form-auth-small m-t-20" id="login" name="login" method="post">
+                        <div class="form-group">
+                            <label for="signin-user" class="control-label sr-only">Username</label>
+                            <input type="text" class="form-control round" id="signin-user" value=""
+                                placeholder="Username" name="auth_user" />
+                        </div>
+                        <div class="form-group">
+                            <label for="signin-email" class="control-label sr-only">Email</label>
+                            <input type="text" class="form-control round" id="signin-email" value="" placeholder="Email"
+                                name="auth_email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="signin-password" class="control-label sr-only">Password</label>
+                            <input type="password" class="form-control round" id="signin-password" value=""
+                                placeholder="Password" name="auth_pass" />
+                        </div>
+                        <input type="hidden" value="login" name="request" />
+                        <div class="btn btn-primary btn-round btn-block" name="register_btn" id="register-btn">
+                            Register
+                        </div>
+                    </form>
+                    <a href="login.html"><p class="lead">Already have an account?</p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var btn = document.getElementById("register-btn");
+        btn.addEventListener("click", function () {
+            let user = document.getElementById("signin-user").value;
+            let email = document.getElementById("signin-email").value;
+            let pass = document.getElementById("signin-password").value;
+
+            if (user != null && email != null && pass != null) {
+                userRegister(user, email, pass);
+            } else {
+                console.log("Enter Valuel");
+            }
+        });
+        function userRegister(user, email, pass) {
+            var settings = {
+                url:
+                    "http://localhost/code/api?action=addUser&username=" +
+                    user +
+                    "&password=" +
+                    pass +
+                    "&email=" +
+                    pass,
+                method: "POST",
+                timeout: 0,
+                mode: "nocors"
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
+    </script>
+    <script></script>
+</body>
+
+</html>

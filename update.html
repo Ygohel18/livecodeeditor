@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+    <script src="codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror/theme/dracula.css">
+    <script type="text/javascript" src="main.js"></script>
+    <script src="codemirror/mode/xml/xml.js"></script>
+    <script src="codemirror/mode/css/css.js"></script>
+    <script src="codemirror/mode/javascript/javascript.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="head">
+        <a href="./index.html"><h2>Live <span style="color: greenyellow;">Code</span> Editor</h2></a>
+        <div class="buttons_head">
+            <button id="download" class="c_view">Download</button>
+            <button id="save_code" class="s_code">Save</button>
+            <a href="./projects.html"><button id="my_projects" class="s_code">My Projects</button></a>
+            <a href="#"><button id="logout" class="s_code">Logout</button></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main">
+            <div class="buttons">
+                <button id="btn_html">HTML</button>
+                <button id="btn_css">CSS</button>
+                <button id="btn_js">JS</button>
+            </div>
+            <div class="code">
+                <div class="html-code" id="html_code">
+                    <p id="lable_html">HTML</p>
+                </div>
+                <div class="css-code" id="css_code">
+                    <p id="lable_css">CSS</p>
+                </div>
+                <div class="js-code" id="js_code">
+                    <p id="lable_js">JS</p>
+                </div>
+            </div>
+        </div>
+        <div class="frame">
+            <p>OUTPUT</p>
+            <iframe id="code"></iframe>
+        </div>
+    </div>
+    <script>
+        var btn = document.getElementById("save_code");
+        btn.addEventListener("click", function () {
+            saveToServer(localStorage.getItem("code_html"), localStorage.getItem("code_css"), localStorage.getItem("code_js"));
+        });
+
+        var logout = document.getElementById("logout");
+        logout.addEventListener("click", function () {
+            localStorage.setItem("isLogin", false);
+            localStorage.setItem("uid", null);
+            localStorage.setItem("pid", null);
+            localStorage.setItem("code_html", "");
+            localStorage.setItem("code_css", "");
+            localStorage.setItem("code_js", "");
+            window.location = "./index.html";
+        });
+
+        var download = document.getElementById("download");
+        download.addEventListener("click", function () {
+
+            if(localStorage.getItem("code_html").length > 0) {
+                download(localStorage.getItem("code_html"), "index.html", "html");
+            }
+
+            if(localStorage.getItem("code_css").length > 0) {
+                download(localStorage.getItem("code_css"), "style.html", "css");
+            }
+
+            if(localStorage.getItem("code_js").length > 0) {
+                download(localStorage.getItem("code_js"), "script.html", "js");
+            }
+        });
+
+    </script>
+    <script>
+
+        function download(data, filename, type) {
+            var file = new Blob([data], { type: type });
+            if (window.navigator.msSaveOrOpenBlob) // IE10+
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else { // Others
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 0);
+            }
+        }
+
+        function saveToServer(html, css, js) {
+            let data = {
+                code: {
+                    html: html,
+                    css: css,
+                    js: js
+                }
+            };
+
+            localStorage.setItem("code_html", JSON.stringify(html));
+            localStorage.setItem("code_css", JSON.stringify(css));
+            localStorage.setItem("code_js", JSON.stringify(js));
+
+            var settings = {
+                    url:
+                        "http://localhost/code/api?action=updateCodeFile&pid=" + localStorage.getItem("pid") +
+                        "&data=" + JSON.stringify(data),
+                    method: "POST",
+                    timeout: 0,
+                    mode: "nocors"
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                });
+        }
+    </script>
+</body>
+
+</html>
